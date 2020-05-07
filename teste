@@ -1,0 +1,3 @@
+compress(originalImg, k)
+decompress(compressedImg, method, k, h)
+calculateError(originalImg, decompressedImg)
