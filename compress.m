@@ -16,7 +16,6 @@ function[] = compress(originalImg, k)
         iJ = iJ + 1;
         endif
     endfor
-    size(J, 1)
-    size(J, 2)
+    size(J)
     imwrite(J, "compressed.png");
 endfunction
