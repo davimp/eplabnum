@@ -63,68 +63,47 @@ endfunction
 function[J] = bicubica(I, info, J, k, h) 
     for i = 1 : info.Height
         for j = 1 : info.Width
-            if i == 1 && j == 1
-                delfdelx(1, j, :)  = (I(2, j, :)-I(1, j, :))/h;
-                delfdely(i, 1, :) = (I(i, 2, :)-I(i, 1, :))/h;
-                continue;
-            endif
-            if i == 1 && j == info.Width
-                delfdelx(1, j, :) = (I(2, j, :)-I(1, j, :))/h;
-                delfdely(i, info.Width, :) = (I(i, info.Height, :)-I(i, info.Height-1, :))/h;
-                continue;
-            endif
-            if i == info.Height && j == 1
-                delfdelx(info.Height, j, :) = (I(info.Height, j, :)-I(info.Height-1, j, :))/h;
-                delfdely(i, 1, :) = (I(i, 2, :)-I(i, 1, :))/h;
-                continue;
-            endif
-            if i == info.Height && j == info.Width
-                delfdelx(info.Height, j, :) = (I(info.Height, j, :)-I(info.Height-1, j, :))/h;
-                delfdely(i, info.Width, :) = (I(i, info.Height, :)-I(i, info.Height-1, :))/h;
-                continue;
-            endif
-            if i == 1
-                delfdelx(1, j, :) = (I(2, j, :)-I(1, j, :))/h;
-                delfdely(i, j, :) = (I(i, j+1, :)-I(i, j-1, :))/2*h;
-                continue;
-            endif
-            if i == info.Height
-                delfdelx(info.Height, j, :) = (I(info.Height, j, :)-I(info.Height-1, j, :))/h;
-                delfdely(i, j, :) = (I(i, j+1, :)-I(i, j-1, :))/2*h;
-                continue;
-            endif
-            if j == 1
-                delfdely(i, 1, :) = (I(i, 2, :)-I(i, 1, :))/h;
-                delfdelx(i, j, :) = (I(i-1, j, :)-I(i+1, j, :))/2*h;
-                continue;
-            endif
-            if j == info.Width 
-                delfdely(i, info.Width, :) = (I(i, info.Height, :)-I(i, info.Height-1, :))/h;
-                delfdelx(i, j, :) = (I(i-1, j, :)-I(i+1, j, :))/2*h;
-                continue;
-            endif
-            delfdelx(i, j, :) = (I(i-1, j, :)-I(i+1, j, :))/2*h;
-            delfdely(i, j, :) = (I(i, j+1, :)-I(i, j-1, :))/2*h;
+            for l = 1 : 3
+                if (i == 1) 
+                    delfdelx(1, j, l) = (I(2, j, l)-I(1, j, l))/h;
+                elseif (i == info.Height)
+                    delfdelx(info.Height, j, l) = (I(info.Height, j, l)-I(info.Height-1, j, l))/h;
+                else
+                    delfdelx(i, j, l) = (I(i+1, j, l)-I(i-1, j, l))/2*h;
+                endif
+
+                if (j == 1)
+                    delfdely(i, 1, l) = (I(i, 1, l)-I(i, 2, l))/h;
+                elseif (j == info.Width)
+                    delfdely(i, info.Width, l) = (I(i, info.Height-1, l)-I(i, info.Height, l))/h;
+                else
+                    delfdely(i, j, l) = (I(i, j-1, l)-I(i, j+1, l))/2*h;
+                endif
+            endfor
         endfor
     endfor
+
+    delfdelx = double(delfdelx);
+    delfdely = double(delfdely);
 
     printf("Terminado delfdelx e delfdely\n");
 
     for i = 1 : info.Height
         for j = 1 : info.Width
-            if (i == 1) 
-                delfdelxy(1, j, :) = (delfdely(2, j, :)-delfdely(1, j, :))/h;
-                continue;
-            endif
-            if (i == info.Height) 
-                delfdelxy(info.Height, j, :) = (delfdely(info.Height, j, :)-delfdely(info.Height-1, j, :))/h;
-                continue;
-            endif 
-            delfdelxy(i, j, :) = (delfdely(i-1, j, :)-delfdely(i+1, j, :))/2*h;
+            for l = 1 : 3
+                if (i == 1) 
+                    delfdelxy(1, j, l) = (delfdely(2, j, l)-delfdely(1, j, l))/h;
+                elseif (i == info.Height) 
+                    delfdelxy(info.Height, j, l) = (delfdely(info.Height, j, l)-delfdely(info.Height-1, j, l))/h;
+                else 
+                    delfdelxy(i, j, l) = (delfdely(i+1, j, l)-delfdely(i-1, j, l))/2*h;
+                endif
+            endfor 
         endfor
     endfor
 
     printf("Terminado delfdelxy\n");
+    delfdelxy = double(delfdelxy);
 
     for i = 2 : info.Height
         for j = 1 : info.Width-1
@@ -150,16 +129,17 @@ function[J] = bicubica(I, info, J, k, h)
                 ];
                 B = double(B);
                 
-                A = inv(B)*F*inv(B');
+                A = inv(B)*F*inv((B)');
 
                 # Itera gerando a imagem J no quadrado i, j 
+                xi1 = (i-1)*(k+1) - k;
                 xi = i*(k+1) - k;
                 yj = j*(k+1) - k;
-                xi1 = (i-1)*(k+1) - k;
                 yj1 = (j+1)*(k+1) - k;
+
                 for x = xi1 : xi
                     for y = yj : yj1
-                        J(x, y, l) = [1 (x-xi) (x-xi)^2 (x-xi)^3 ]*A*[1 ; (y - yj) ; (y - yj)^2 ; (y - yj)^3]; 
+                        J(x, y, l) = [1 (xi-x) (xi-x)^2 (xi-x)^3 ]*A*[1 ; (y - yj) ; (y - yj)^2 ; (y - yj)^3]; 
                     endfor
                 endfor
 
