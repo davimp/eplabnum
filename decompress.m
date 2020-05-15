@@ -2,6 +2,9 @@ function[] = decompress(compressedImg, method, k, h)
     [I, map] = imread(compressedImg);
     info = imfinfo(compressedImg);
 
+    % I = im2double(I);
+    h = double(h);
+
     # inicializa a matriz
     for i = 1 : info.Height
         for j = 1 : info.Width
@@ -30,7 +33,7 @@ endfunction
 function[J] = bilinear(I, info, J, k, h)
     for i = 2 : info.Height
         for j = 1 : info.Width-1
-            for l = 1 : 3 
+            for l = 1 : 3
                 fij = I(i, j, l);
                 fi1j = I(i-1, j, l);
                 fi1j1 = I(i-1, j+1, l);
@@ -43,7 +46,7 @@ function[J] = bilinear(I, info, J, k, h)
                 M = double(M);
                 A = inv(M)*F;
 
-                # Itera gerando a imagem J no quadrado i, j 
+                # Itera gerando a imagem J no quadrado i, j
                 xi = i*(k+1) - k;
                 yj = j*(k+1) - k;
                 xi1 = (i-1)*(k+1) - k;
@@ -60,64 +63,72 @@ function[J] = bilinear(I, info, J, k, h)
     endfor
 endfunction
 
-function[J] = bicubica(I, info, J, k, h) 
+function[J] = bicubica(I, info, J, k, h)
+    Dx = zeros(info.Height, info.Width, 3, "double");
+    Dy = zeros(info.Height, info.Width, 3, "double");
+    Dxy = zeros(info.Height, info.Width, 3, "double");
+
     for i = 1 : info.Height
         for j = 1 : info.Width
             for l = 1 : 3
-                if (i == 1) 
-                    delfdelx(1, j, l) = (I(2, j, l)-I(1, j, l))/h;
+                if (i == 1)
+                    Dx(1, j, l) = (I(2, j, l)-I(1, j, l))/h;
                 elseif (i == info.Height)
-                    delfdelx(info.Height, j, l) = (I(info.Height, j, l)-I(info.Height-1, j, l))/h;
+                    Dx(info.Height, j, l) = (I(info.Height-1, j, l)-I(info.Height, j, l))/h;
                 else
-                    delfdelx(i, j, l) = (I(i+1, j, l)-I(i-1, j, l))/2*h;
+                    Dx(i, j, l) = (I(i+1, j, l)-I(i-1, j, l))/h;
                 endif
 
                 if (j == 1)
-                    delfdely(i, 1, l) = (I(i, 1, l)-I(i, 2, l))/h;
+                    Dy(i, 1, l) = (I(i, 1, l)-I(i, 2, l))/h;
                 elseif (j == info.Width)
-                    delfdely(i, info.Width, l) = (I(i, info.Height-1, l)-I(i, info.Height, l))/h;
+                    Dy(i, info.Width, l) = (I(i, info.Width-1, l)-I(i, info.Width, l))/h;
                 else
-                    delfdely(i, j, l) = (I(i, j-1, l)-I(i, j+1, l))/2*h;
+                    Dy(i, j, l) = (I(i, j-1, l)-I(i, j+1, l))/(2*h);
                 endif
             endfor
         endfor
     endfor
 
-    delfdelx = double(delfdelx);
-    delfdely = double(delfdely);
+    Dx = double(Dx);
+    Dy = double(Dy);
 
-    printf("Terminado delfdelx e delfdely\n");
+    printf("Terminado Dx e Dy\n");
 
     for i = 1 : info.Height
         for j = 1 : info.Width
             for l = 1 : 3
-                if (i == 1) 
-                    delfdelxy(1, j, l) = (delfdely(2, j, l)-delfdely(1, j, l))/h;
-                elseif (i == info.Height) 
-                    delfdelxy(info.Height, j, l) = (delfdely(info.Height, j, l)-delfdely(info.Height-1, j, l))/h;
-                else 
-                    delfdelxy(i, j, l) = (delfdely(i+1, j, l)-delfdely(i-1, j, l))/2*h;
+                if (i == 1)
+                    Dxy(1, j, l) = (Dy(2, j, l)-Dy(1, j, l))/h;
+                elseif (i == info.Height)
+                    Dxy(info.Height, j, l) = (Dy(info.Height, j, l)-Dy(info.Height-1, j, l))/h;
+                else
+                    Dxy(i, j, l) = (Dy(i+1, j, l)-Dy(i-1, j, l))/(2*h);
                 endif
-            endfor 
+            endfor
         endfor
     endfor
 
-    printf("Terminado delfdelxy\n");
-    delfdelxy = double(delfdelxy);
+    Dxy = double(Dxy);
+    printf("Terminado Dxy\n");
 
+    fij = 0;
+    fi1j = 0;
+    fi1j1 = 0;
+    fij1 = 0;
     for i = 2 : info.Height
         for j = 1 : info.Width-1
-            for l = 1 : 3 
+            for l = 1 : 3
                 fij = I(i, j, l);
                 fi1j = I(i-1, j, l);
                 fi1j1 = I(i-1, j+1, l);
                 fij1 = I(i, j+1, l);
 
                 F = [
-                     fij fij1 delfdely(i, j, l) delfdely(i, j+1, l) ;
-                     fi1j fi1j1 delfdely(i-1, j, l) delfdely(i-1, j+1, l) ;
-                     delfdelx(i, j, l) delfdelx(i, j+1, l) delfdelxy(i, j, l) delfdelxy(i, j+1, l) ;
-                     delfdelx(i-1, j, l) delfdelx(i-1, j+1, l) delfdelxy(i-1, j, l) delfdelxy(i-1, j+1, l)
+                     fij fij1 Dy(i, j, l) Dy(i, j+1, l) ;
+                     fi1j fi1j1 Dy(i-1, j, l) Dy(i-1, j+1, l) ;
+                     Dx(i, j, l) Dx(i, j+1, l) Dxy(i, j, l) Dxy(i, j+1, l) ;
+                     Dx(i-1, j, l) Dx(i-1, j+1, l) Dxy(i-1, j, l) Dxy(i-1, j+1, l)
                 ];
                 F = double(F);
 
@@ -128,10 +139,10 @@ function[J] = bicubica(I, info, J, k, h)
                     0 1 2*h 3*h^2
                 ];
                 B = double(B);
-                
+
                 A = inv(B)*F*inv((B)');
 
-                # Itera gerando a imagem J no quadrado i, j 
+                # Itera gerando a imagem J no quadrado i, j
                 xi1 = (i-1)*(k+1) - k;
                 xi = i*(k+1) - k;
                 yj = j*(k+1) - k;
@@ -139,7 +150,7 @@ function[J] = bicubica(I, info, J, k, h)
 
                 for x = xi1 : xi
                     for y = yj : yj1
-                        J(x, y, l) = [1 (xi-x) (xi-x)^2 (xi-x)^3 ]*A*[1 ; (y - yj) ; (y - yj)^2 ; (y - yj)^3]; 
+                        J(x, y, l) = [1 (xi-x) (xi-x)^2 (xi-x)^3 ]*A*[1 ; (y-yj) ; (y-yj)^2 ; (y-yj)^3];
                     endfor
                 endfor
 
