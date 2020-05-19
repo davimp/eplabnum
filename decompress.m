@@ -24,7 +24,7 @@ function[] = decompress(compressedImg, method, k, h)
         J = bicubica(I, info, J, k, h);
     endif
 
-    imshow(J);
+    % imshow(J);
     imwrite(J, "decompressed.png");
 
 endfunction

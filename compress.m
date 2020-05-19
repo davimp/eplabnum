@@ -2,7 +2,6 @@ function[] = compress(originalImg, k)
     [I, map] = imread(originalImg);
     info = imfinfo(originalImg);
 
-    I = ind2rgb(I, map);
     iJ = 1;
     jJ = 1;
 
