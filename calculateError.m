@@ -13,6 +13,6 @@ function[ret] = calculateError(originalImg, decompressedImg)
     errG = norm(I(:,:,2) - J(:,:,2))/norm(I(:,:,2));
     errB = norm(I(:,:,3) - J(:,:,3))/norm(I(:,:,3));
 
-    ret = (errR + errG + errB)/3
+    ret = (errR + errG + errB)/3;
 
 endfunction
