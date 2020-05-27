@@ -5,6 +5,13 @@ function[] = decompress(compressedImg, method, k, h)
     % I = im2double(I);
     h = double(h);
 
+    printf("Altura ");
+    info.Height
+    printf("Largura ");
+    info.Width
+    printf("Altura máxima: ");
+    info.Width*(k+1)-k
+
     # inicializa a matriz
     for i = 1 : info.Height
         for j = 1 : info.Width
