@@ -1,7 +1,7 @@
 function algo(imgName)
   ks = [1, 4, 9, 19];
   hs = [1, 10, 50, 100, 1000, 10000];
-  imgPath = strcat(imgName, ".ppm");
+  imgPath = strcat(imgName);
   for k = ks
     printf("Compressing for k = %d\n", k)
     compress(imgPath, k);
