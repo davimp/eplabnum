@@ -1,4 +1,4 @@
-function[] = decompress(compressedImg, method, k, h)
+function[] = decompress(compressedImg, method, k, h, outName)
     [I, map] = imread(compressedImg);
     info = imfinfo(compressedImg);
 
@@ -33,7 +33,7 @@ function[] = decompress(compressedImg, method, k, h)
 
     size(J)
     % imshow(J);
-    imwrite(J, "decompressed.png");
+    imwrite(J, outName);
 
 endfunction
 
