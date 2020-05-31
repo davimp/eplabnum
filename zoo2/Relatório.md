@@ -30,10 +30,8 @@ $
 Zoo2:
 
 $
-f(x, y) = (\cos(x+y)x + \sin(y), \cos(x+y)x + \sin(y), sin(x))
+f(x, y) = (\cos(x), \sin(x^2)^2+y, sin(x+y))
 $
-
-[cos(x), sin(x^2)^2+y, sin(x+y)]
 
 Zoo3 (escolhida para gerar uma imagem em "preto e branco"):
 
