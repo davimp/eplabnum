@@ -1,4 +1,4 @@
-function zoo2(imgName, ini, fim, p)
+function zoo3(imgName, ini, fim, p)
     img = zeros(p, p, 3);
     i = p;
     for x = linspace(ini,fim, p)
@@ -15,5 +15,5 @@ endfunction
 
 function ret = f(x, y)
     ret = zeros(3);
-    ret = [cos(x+y)*x + sin(y), cos(x+y)*x + sin(y), cos(x+y)*x + sin(y)];
+    ret = [cos(x+y)*x+sin(y), cos(x+y)*x+sin(y), cos(x+y)*x+sin(y)];
 endfunction
