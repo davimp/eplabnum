@@ -15,5 +15,5 @@ endfunction
 
 function ret = f(x, y)
     ret = zeros(3);
-    ret = [cos(x+y)*x + sin(y), cos(x+y)*x + sin(y), cos(x+y)*x + sin(y)];
+    ret = [cos(x), sin(x^2)^2+y, sin(x+y)];
 endfunction
