@@ -29,29 +29,35 @@ A função `muitosErros` recebe uma imagem original e compara todas as imagens g
 
 ### O zoológico
 
-Separamos as funções escolhidas para essa etapa em três: zoo1, zoo2 e zoo3.
+Separamos as funções escolhidas para essa etapa em quatro: zoo1, zoo2, zoo3 e zoo4.
 
 Zoo1 (função pedida no enunciado):
 
-$
-f(x, y) = (\sin(x), \frac{\sin(x)+\sin(y)}{2}, \sin(x))
-$
+$f(x, y) = (\sin(x), \frac{\sin(x)+\sin(y)}{2}, \sin(x))$
 
 Zoo2:
 
-$
-f(x, y) = (\cos(x), \sin(x^2)^2+y, \sin(x+y))
-$
+$f(x, y) = (\cos(x), \sin(x^2)^2+y, \sin(x+y))$
 
 Zoo3 (escolhida para gerar uma imagem em "preto e branco"):
 
 $f(x, y) = (\cos(x+y)x + \sin(y), \cos(x+y)x + \sin(y), \cos(x+y)x + \sin(y))$
 
-Observamos, em comparando as três funções, a dada no enunciado parace ter um erro menor que as outras na grande maioria dos casos. Vale a pena notar que ela é mais colorida que as outras. Já a imagem zoo2 apresentou erros menores em ralação à zoo3 na maioria dos casos, exceto nos casos em que $h = 1$ e algumas vezes em que $h = 10$. Então, de uma maneira geral, as imagem coloridas tendem a ter menos erro do que as preto e branco para as imagens geradas.
+Zoo4:
+
+$f(x, y) = (x, x+y, \cos(x))$
+
+Zoo5 (não é de classe $C^2$):
+
+$f(x, y) = (x^2\sin(1/y), \sin(x)\sin(y), y^2\sin(1/x))$
+
+Primeiramente, comparando as quatro primeira funções, observamos que a Zoo4 parace ter um erro menor que as outras na grande maioria dos casos. Vale a pena notar que ela é mais colorida que as outras. Já a imagem Zoo2 apresentou erros menores em relação à Zoo3 na maioria dos casos, exceto nos casos em que $h = 1$ e algumas vezes em que $h = 10$. Então, de uma maneira geral, as imagem coloridas tendem a ter menos erro do que as preto e branco para as imagens geradas.
 
 Quanto ao valor de $h$, para cada uma das imagens é possível notar que nos valores iniciais de $h$, por exemplo,  de $h = 1$ para $h = 10$ e de $h = 10$ para $h = 100$, a mudança afeta consideravelmente o valor do erro. Porém, para valores mais altos a diferença é bem baixa. Visualmente, podemos ver que para h maiores a resolução da imagem melhora.
 
 Quanto aos métodos usados, para $h = 1$ a método bilinear foi melhor que o bucúbico, já para os outros valores de h o método bicúbico demonstrou ser melhor, mesmo que as diferenças entre os dois erros não tenham sido muito expressivas na maioria dos casos.
+
+Por último, a função Zoo5, que não é de classe $C^2$, apresentou erros muito maiores que as outras, o que era esperado.
 
 
 ### A selva
