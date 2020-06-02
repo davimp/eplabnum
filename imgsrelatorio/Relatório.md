@@ -69,3 +69,115 @@ Quanto ao valor de $h$, percebemos que, em ambos os métodos bilinear e bicúbic
 Entretanto, algo interesante de notar é que o erro nos dois tipos de método acabam não diminuindo para sempre junto com o $h$, como era de se esperar. Na verdade, existe um ponto em que o erro é menor entre $h=10$ e $h=100$ e depois disso, para $h>=1000$, vemos que o erro é, na verdade maior. Não sabemos exatamente por que isso acontece, mas imaginamos que seja devido aos _erros catrastóficos_ citados no começo do semestre.
 
 ## Exemplos ilustrativos dos resultados
+
+Agora mostremos algumas das imagens que obtivemos:
+
+### Lenna
+
+![Lenna-1-4-1](Lenna-1-4-1.png)
+
+**Imagem usando bilinear, k = 4, h = 1**
+
+![Lenna-2-1-10000](Lenna-2-1-10000.png)
+
+**Imagem usando bicúbica, k = 1, h = 10000**
+
+
+![Lenna-2-4-1](Lenna-2-4-1.png)
+
+**Imagem usando bicúbica, k = 4, h = 1**
+
+
+![Lenna-2-9-100](Lenna-2-9-100.png)
+
+**Imagem usando bicúbica, k = 9, h = 100**
+
+#### Quadrinho
+
+![Quadrinho-1-1-1](quadrinho.png-1-1-1.png)
+
+**Imagem usando bilinear, k = 1, h = 1**
+
+![Quadrinho-1-1-1000](quadrinho.png-1-1-1000.png)
+
+**Imagem usando bilinear, k = 1, h = 1000**
+
+![Quadrinho-2-1-10000](quadrinho.png-2-1-10000.png)
+
+**Imagem usando bicúbica, k = 1, h = 10000**
+
+![Quadrinho-2-4-1](quadrinho.png-2-4-1.png)
+
+**Imagem usando bicúbica, k = 4, h = 1**
+
+![Quadrinho-2-19-10](quadrinho.png-2-19-10.png)
+
+**Imagem usando bicúbica, k = 19, h = 10**
+
+### Zoo1
+
+![img-1-19-1](img.png-1-19-1.png)
+
+**Imagem usando bilinear, k = 19, h = 1**
+
+![img-2-1-10000](img.png-2-1-10000.png)
+
+**Imagem usando bicúbica, k = 1, h = 10000**
+
+![img-2-4-1](img.png-2-4-1.png)
+
+**Imagem usando bicúbica, k = 4, h = 1**
+
+![img-2-9-1](img.png-2-9-1.png)
+
+**Imagem usando bicúbica, k = 4, h = 1**
+
+### Zoo2
+
+![zoo2-1-9-1](zoo2-1-9-1.png)
+
+**Imagem usando bilinear, k = 9, h = 1**
+
+![zoo2-2-1-1](zoo2-2-1-1.png)
+
+**Imagem usando bicúbica, k = 1, h = 1**
+
+![zoo2-2-2-10](zoo2-2-19-10.png)
+
+**Imagem usando bicúbica, k = 19, h = 10**
+
+### Zoo3
+
+![zoo3-1-4-10000](zoo3-1-4-10000.png)
+
+**Imagem usando bilinear, k = 4, h = 10000**
+
+![zoo3-1-9-10000](zoo3-1-9-10000.png)
+
+**Imagem usando bilinear, k = 9, h = 10000**
+
+![zoo3-2-9-1](zoo3-2-9-1.png)
+
+**Imagem usando bicúbica, k = 9, h = 1**
+
+![zoo3-2-19-1](zoo3-2-19-1.png)
+
+**Imagem usando bicúbica, k = 19, h = 1**
+
+### Zoo5
+
+![zoo5-1-4-10000](zoo5-1-4-10000.png)
+
+**Imagem usando bilinear, k = 4, h = 10000**
+
+![zoo5-1-19-1](zoo5-1-19-1.png)
+
+**Imagem usando bilinear, k = 19, h = 1**
+
+![zoo5-1-19-10000](zoo5-1-19-10000.png)
+
+**Imagem usando bilinear, k = 19, h = 10000**
+
+![zoo5-2-9-1](zoo5-2-9-1.png)
+
+**Imagem usando bicúbica, k = 9, h = 1**
