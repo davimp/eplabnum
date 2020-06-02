@@ -1,8 +1,9 @@
 function[] = decompress(compressedImg, method, k, h, outName)
+    %le imagem
     [I, map] = imread(compressedImg);
     info = imfinfo(compressedImg);
 
-    % I = im2double(I);
+    %transforma pra double para poder realizar as contas
     h = double(h);
 
     printf("Altura ");
@@ -12,7 +13,7 @@ function[] = decompress(compressedImg, method, k, h, outName)
     printf("Altura máxima: ");
     info.Width*(k+1)-k
 
-    # inicializa a matriz
+    % inicializa a matriz
     for i = 1 : info.Height
         for j = 1 : info.Width
             J((i)*(k+1)-k, (j)*(k+1)-k,:) = I(i, j,:);
@@ -20,6 +21,7 @@ function[] = decompress(compressedImg, method, k, h, outName)
         i
     endfor
 
+    %escolhe o metodo e chama o metodo
     if (method == 1)
         # bilinear
         printf("Chamando bilinear\n");
@@ -32,7 +34,7 @@ function[] = decompress(compressedImg, method, k, h, outName)
     endif
 
     size(J)
-    % imshow(J);
+    % escreve a imagem
     imwrite(J, outName);
 
 endfunction
@@ -72,6 +74,8 @@ function[J] = bilinear(I, info, J, k, h)
 endfunction
 
 function[J] = bicubica(I, info, J, k, h)
+ 
+    %preparamos matrizes com as derivadas que precisamos
     Dx = zeros(info.Height, info.Width, 3, "double");
     Dy = zeros(info.Height, info.Width, 3, "double");
     Dxy = zeros(info.Height, info.Width, 3, "double");
@@ -120,6 +124,7 @@ function[J] = bicubica(I, info, J, k, h)
     Dxy = double(Dxy);
     printf("Terminado Dxy\n");
 
+    %calculamos a nova imagem
     fij = 0;
     fi1j = 0;
     fi1j1 = 0;

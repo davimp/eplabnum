@@ -1,4 +1,5 @@
 function algo(imgName)
+  %sctript para realizaçao dos testes
   ks = [1, 4, 9, 19];
   hs = [1, 10, 50, 100, 1000, 10000];
   imgPath = strcat(imgName, ".png");
