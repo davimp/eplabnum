@@ -1,3 +1,4 @@
+% Calcula os erros
 function muitosErros(imgName)
   scanFiles(imgName, ".", "png");
 

@@ -6,7 +6,7 @@ Feito por:
 
 ## Decisões de projeto quanto à implementação dos métodos
 
-No enunciado, tínhamos que as coordenadas em y cresciam para cima, enquanto que no Octave, temos que as coordenadas das linhs crescem para baixo. Assim sendo, nós tivemos que adaptar isso e sempre que nas fórmulas existia um y+1, tínhamos que fazer j-1.
+No enunciado, tínhamos que as coordenadas em y cresciam para cima, enquanto que no Octave, temos que as coordenadas das linhas crescem para baixo. Assim sendo, nós tivemos que adaptar isso e sempre que nas fórmulas existia um y+1, tínhamos que fazer j-1.
 
 Além disso, achamos conveniente, na descompressão, pegar, de cada quadrado (como definido no enunciado), o ponto inferior esquerdo para iterar. Assim sendo, iteramos pelos pontos de i = 2 até a altura e de j = 1 até a largura menos um.
 
@@ -29,7 +29,7 @@ A função `muitosErros` recebe uma imagem original e compara todas as imagens g
 
 ### O zoológico
 
-Separamos as funções escolhidas para essa etapa em quatro: zoo1, zoo2, zoo3 e zoo4.
+Separamos as funções escolhidas para essa etapa em cinco: zoo1, zoo2, zoo3, zoo4 e zoo5.
 
 Zoo1 (função pedida no enunciado):
 
@@ -53,12 +53,11 @@ $f(x, y) = (x^2\sin(1/y), \sin(x)\sin(y), y^2\sin(1/x))$
 
 Primeiramente, comparando as quatro primeira funções, observamos que a Zoo4 parace ter um erro menor que as outras na grande maioria dos casos. Vale a pena notar que ela é mais colorida que as outras. Já a imagem Zoo2 apresentou erros menores em relação à Zoo3 na maioria dos casos, exceto nos casos em que $h = 1$ e algumas vezes em que $h = 10$. Então, de uma maneira geral, as imagem coloridas tendem a ter menos erro do que as preto e branco para as imagens geradas.
 
-Quanto ao valor de $h$, para cada uma das imagens é possível notar que nos valores iniciais de $h$, por exemplo,  de $h = 1$ para $h = 10$ e de $h = 10$ para $h = 100$, a mudança afeta consideravelmente o valor do erro. Porém, para valores mais altos a diferença é bem baixa. Visualmente, podemos ver que para h maiores a resolução da imagem melhora.
+Quanto ao valor de $h$, para cada uma das imagens é possível notar que nos valores iniciais de $h$, por exemplo,  de $h = 1$ para $h = 10$ e de $h = 10$ para $h = 100$, a mudança afeta consideravelmente o valor do erro. Porém, para valores mais altos, a diferença é bem baixa. Visualmente, podemos ver que para h maiores a resolução da imagem melhora.
 
 Quanto aos métodos usados, para $h = 1$ a método bilinear foi melhor que o bucúbico, já para os outros valores de h o método bicúbico demonstrou ser melhor, mesmo que as diferenças entre os dois erros não tenham sido muito expressivas na maioria dos casos.
 
 Por último, a função Zoo5, que não é de classe $C^2$, apresentou erros muito maiores que as outras, o que era esperado.
-
 
 ### A selva
 
@@ -66,7 +65,7 @@ Obervamos que a imagem `quadrinho.png` possui mais erro no geral do que a imagem
 
 Quanto ao valor de $h$, percebemos que, em ambos os métodos bilinear e bicúbico, o $h$ para de fazer efeito no erro depois que $h$ cresce demais. Observamos que para $h=1000$ e $h=10000$, o erro praticamente não muda. 
 
-Entretanto, algo interesante de notar é que o erro nos dois tipos de método acabam não diminuindo para sempre junto com o $h$, como era de se esperar. Na verdade, existe um ponto em que o erro é menor entre $h=10$ e $h=100$ e depois disso, para $h>=1000$, vemos que o erro é, na verdade maior. Não sabemos exatamente por que isso acontece, mas imaginamos que seja devido aos _erros catrastóficos_ citados no começo do semestre.
+Entretanto, algo interesante de notar é que o erro nos dois tipos de método acabam não diminuindo para sempre junto com o $h$, como era de se esperar. Na verdade, existe um ponto em que o erro é menor entre $h=10$ e $h=100$ e depois disso, para $h\geq 1000$, vemos que o erro é, na verdade, maior. Não sabemos exatamente por que isso acontece, mas imaginamos que seja devido aos _erros catrastóficos_ citados no começo do semestre.
 
 ## Exemplos ilustrativos dos resultados
 
